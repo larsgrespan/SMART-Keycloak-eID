@@ -198,6 +198,8 @@ Note: Avoid opening index.html first, as this can lead to errors.
 
 8. To initiate the login process you can click the login button. However the authorization server is not configured yet, so it will lead to errors. When you finished the Keylocak setup, you can try the login process. Note that you may delete cookies after an login.
 
+## Keycloak
+
 
 
 
