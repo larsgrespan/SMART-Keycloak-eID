@@ -60,3 +60,97 @@ cd ~
 ```
 
 2. Create a new directory:
+```
+mkdir fake-fhir
+```
+
+3. Change into the newly created directory:
+```
+cd fake-fhir
+```
+
+4. Initialize a new NPM project. Keep the default configurations and specify a project name such as fake-fhir:
+```
+npm init
+```
+
+5. Install the http-server with NPM:
+```
+npm install http-server
+```
+
+6. Create a new file server.js with a text editor of your choice, for example nano:
+```
+nano server.js
+```
+
+7. Insert the following code into the server.js file: 
+```
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  if (req.url === '/fhir/') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello World');
+  } else if (req.url === '/fhir/.well-known/smart-configuration') {
+    const json = JSON.stringify({
+      issuer: 'http://localhost:8081/fhir/',
+      jwks_uri: 'http://localhost:8082/realms/myrealm/protocol/openid-connect/certs',
+      authorization_endpoint: 'http://localhost:8082/realms/myrealm/protocol/openid-connect/auth',
+      grant_types_supported: ['authorization_code'],
+      token_endpoint: 'http://localhost:8082/realms/myrealm/protocol/openid-connect/token',
+      token_endpoint_auth_methods_supported: [
+        'private_key_jwt',
+        'client_secret_basic',
+        'client_secret_post',
+        'tls_client_auth',
+        'client_secret_jwt'
+      ],
+      scopes_supported: [
+        'openid',
+        'launch',
+        'launch/patient',
+        'patient/*.cruds',
+        'offline_access'
+      ],
+      response_types_supported: ['code'],
+      introspection_endpoint: 'http://localhost:8082/realms/myrealm/protocol/openid-connect/token/introspect',
+      capabilities: [
+        'launch-standalone',
+        'client-public',
+        'context-standalone-patient',
+        'permission-patient',
+        'sso-openid-connect'
+      ],
+      code_challenge_methods_supported: ['S256']
+    });
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(json);
+  } else {
+    res.writeHead(404);
+    res.end();
+  }
+});
+
+server.listen(8081, () => {
+  console.log('Server running on http://localhost:8081/');
+});
+
+```
+The JSON file can also be found in the FHIR-Mock folder.
+
+8. Save the file.
+
+9. Start the server with Node.js:
+```
+node server.js
+```
+
+10. Check the results by visiting the following link in your web browser:
+```
+http://localhost:8081/fhir/.well-known/smart-configuration
+```
+
+
+
