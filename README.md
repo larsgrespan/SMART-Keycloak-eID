@@ -5,7 +5,8 @@ The main goal of this project is to create a prototype of a [SMART on FHIR](http
 This project is inspired by the [Health Outcomes Observatory](https://health-outcomes-observatory.eu) (H20) project, which aims to integrate patient-generated data (PRO) into EHR systems. By combining the SMART on FHIR app with Keycloak's authorization server and ID Austria as the identity provider, the project aims to provide patients with a secure and user-friendly way to access health data.
 
 ## Architecture (General)
-The general architecture of the launch and authorization process in SMART on FHIR is as follows:
+The general architecture of the launch and authorization process with the SMART on FHIR standard looks as follows:
+
 ![Architecture - General](images/image.png)
 
 The authentication and authorisation process can be roughly described in seven steps:
@@ -28,8 +29,13 @@ The access token is signed, contains information about the rights granted and ca
 7.	Refresh access token
 The validity of the access token is limited. To continue accessing FHIR resources, the application needs to update the token.
 
-In-Depth details can be found [here](https://build.fhir.org/ig/HL7/smart-app-launch/app-launch.html#launch-app-standalone-launch). 
+Note: A central component of the SMART on FHIR standard is authorization and authentication. For this, the SMART on FHIR standards builds on the oAuth2.0 and Open-ID Connect standard. In-Depth details can be found [here](https://build.fhir.org/ig/HL7/smart-app-launch/app-launch.html#launch-app-standalone-launch). 
 
 ## Architecture (Prototype)
-The specific architecture for the prototype looks as follows:
+For the prototype, the general architecture has to be adapted a little. Firstly, the prototype is a standalone SMART on FHIR app. In other words, an app that is not launched from the EHR system. This is because the app is later designed for patients to capture PRO data, which is not handled by an EHR system but by a standalone app. Secondly, another component is added to the prototype architecture, namely ID Austria as the identity provider. Keylcoak serves as an identity broker between the app and the identity provider. Besides that, the authorisation and authentication process is almost the same as in the 7 steps described above. The architecture of the prototype can be seen in the next figure.
+
 ![Architecture - Prototype](images/image1.png)
+
+Notes on the components and the current state of development:
+- the FHIR server is provided by the company [pineIT](https://www.pineit.at) for this project. Due to CORS restrictions on the server side, relevant server endpoints are simulated on a local environment (localhost). The validation of the tokens is therefore not possible in the first step, and must be carried out as soon as the SMART on FHIR app is running under the same domain as the FHIR server in order to circumvent the CORS restrictions.
+- Currently, the access data to ID Austria is still missing, which is why GitHub is being used as the identity provider for the time being.
