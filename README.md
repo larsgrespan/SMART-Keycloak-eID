@@ -55,6 +55,8 @@ The FHIR server has two primary tasks. Firstly, it serves the smart-configuratio
 To simulate the /.well-known/smart-configuration endpoint, perform the following steps:
 
 1. Navigate to your Home directory:
-` cd ~ `
+```
+cd ~
+```
 
 2. Create a new directory:
