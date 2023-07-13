@@ -212,10 +212,36 @@ These configurations include:
 
 3. The Keycloak server needs to ensure that the JWT token includes a patient_id that corresponds to the patient_id stored in the FHIR server. This allows the app to request the relevant FHIR resources associated with that patient_id. To achieve this, a mapping is required. However, mapping itself is a complex project and is not covered in the current project. In this documentation, the patient_id is also hard-coded, similar to the audience parameter.
 
-To configure the Keycloak server, follow the next steps. The following configurations outline the tasks that the Keycloak server needs to fulfill.
+To configure the Keycloak server, follow the next steps. The following configurations outline the tasks that the Keycloak server needs to fulfill: 
 
 
+1. Run Keycloak using Docker with the following command:
+```
+docker run -p 8082:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:22.0.0 start-dev
+```
+Note: Keycloak version 22.0.0 was used in this project.
 
+2. Create a realm (e.g., "myrealm") in Keycloak.
+![Realm](images/image2.png)
+
+3. Click on "clients" and create a new client.
+![Clients](images/image3.png)
+
+4. Ensure "OpenID Connect" is selected, specify a client id (e.g., "myclient") and click next.
+![Client ID](images/image4.png)
+Note: The client id has to be the same as specified in the SMART app.
+
+5. For capability config, keep the default configuration and click next.
+
+6. In "Login settings", specify a “*” for "Valid redirect URIs" and "Web origins", then click save.
+![Login Settings](images/image5.png)
+Note: This setting is only for development purposes. It should be adapted for a production environment.
+
+7. After creating your client, scroll down to "Login settings".
+
+8. In this section, select "keycloak" as the Login Theme, enable "Consent required", and enable "Display client on screen" (if you wish), then click save.
+
+![Consent](images/image6.png)
 
 
 
