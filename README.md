@@ -200,6 +200,19 @@ Note: Avoid opening index.html first, as this can lead to errors.
 
 ## Keycloak
 
+The last component is Keycloak. Keycloak serves as the authorization server connected to the identity provider. Currently, GitHub is being used, but later it will be ID Austria.
+
+When a client app successfully authenticates with Keycloak, Keycloak issues a JWT token to the app. This token allows the app to query FHIR resources. To ensure that the JWT token is recognized as valid by the FHIR server, certain configurations need to be made in Keycloak to include relevant information in the token.
+
+These configurations include:
+
+1. The Keycloak server needs to ensure that the JWT token includes an Audience parameter. This parameter is checked to prevent fake servers from obtaining a JWT token that can be used to request resources from legitimate FHIR servers. The Audience parameter serves as a security measure. To achieve this, a Keycloak extension exists, but we encountered difficulties deploying it in a public Keycloak environment. Therefore, a temporary alternative was sought, which involved hard-coding the Audience parameter into the JWT token via the scopes, as described in the present documentation.
+
+2. The Keycloak server is also responsible for checking the scopes and returning the scopes along with the JWT token. It verifies whether the client is authorized to request the scopes. The allowed scopes are stored in Keycloak and are validated accordingly. If a client requests scopes that are not defined in Keycloak, the authentication process is aborted.
+
+3. The Keycloak server needs to ensure that the JWT token includes a patient_id that corresponds to the patient_id stored in the FHIR server. This allows the app to request the relevant FHIR resources associated with that patient_id. To achieve this, a mapping is required. However, mapping itself is a complex project and is not covered in the current project. In this documentation, the patient_id is also hard-coded, similar to the audience parameter.
+
+To configure the Keycloak server, follow the next steps. The following configurations outline the tasks that the Keycloak server needs to fulfill.
 
 
 
