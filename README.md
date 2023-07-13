@@ -243,6 +243,70 @@ Note: This setting is only for development purposes. It should be adapted for a 
 
 ![Consent](images/image6.png)
 
+9. Scroll back to the top and navigate to the "Advanced" section. On the right side, jump to "Advanced Settings". 
+![Advanced settings](images/image7.png)
 
+10. Select "S256" for "Proof Key for Code Exchange Code Challenge Method (PKCE)", then save the changes.
+![S256](images/image8.png)
+Note: This step might be automatically done through the client request.
 
+11. After this, open the "Client scopes" section.
+![Scopes](images/image9.png)
+
+12. Create the scopes specified in the parameters of your oauth2.authorize() method in your SMART on FHIR app (in our case: openid, launch, launch/patient, patient/*.cruds, offline_access).
+
+13. Click "Create client scope".
+
+14. Specify the name of the client scope (e.g., "openid") and select "Optional" for the type. Keep the default for other parameters and click "Save".
+![openid](images/image10.png)
+
+15. Repeat this process for all other scopes.
+
+16. Once all scopes have been created, you need to create mappers to include the aud parameter in your token. To do this, open the scopes (in this case, "openid").
+![Aud](images/image11.png)
+
+17. Open "Mappers", and click "Add mapper". Then, select "By configuration".
+![Mappers](images/image12.png)
+
+18. Select the "Audience" mapper.
+![aud mapper](images/image13.png)
+
+19. Specify a name for the mapper and include the FHIR Server URL in the "Included Custom Audience" field. Then click "Save".
+![fhir server url](images/image14.png)
+
+20. Repeat this process for all created scopes.
+
+21. After this, open your created client again. Go to the "Client scope" section. Add all your created client scopes to your client. Ensure the "Assigned" type is set to "optional".
+![Assigend scopes](images/image15.png)
+
+22. Add GitHub as an External Identity Provider. For this, follow the instructions from this [video](https://www.youtube.com/watch?v=P8lpE9nV_Sw).
+
+23. After this, you should be able to login and get an access token. To include the patient_id, an external identity user has to log in first. To do this, start your SMART on FHIR app and log in via GitHub once. (Follow the instructions in the SMART Standalone App part before. Make sure the CORS Webbrowser extension is running). After login, delete the cookies and open Keycloak again.
+
+24. Open the "User" section. There, you should see a user now.
+![User](images/image16.png)
+
+25. Open this user, click on the "Attributes" section and "Add an attribute".
+![User attributes](images/image17.png)
+
+26. As key, specify resourceID. As value, specify Patient0000. Then click "Save".
+![resourceID](images/image18.png)
+Note: Later, you need to adapt the value to the corresponding patient_id in your FHIR server.
+
+27. Open the "Client scopes" section again and open the scope launch/patient.
+![launch/patient](images/image19.png)
+
+28. Add a second mapper for this specific scope. 
+![id mapper](images/image20.png)
+
+29. Select "User Attribute".
+![user attribute](images/image21.png)
+
+30. Specify a name for the mapper. For "User Attribute", specify resourceID. For "Token Claim Name", specify patient_id. Save the changes.
+![id mapper 2](images/image22.png)
+
+31. If necessary: Go to the "User" section again. Open your user. Go to the "Consent" section and "Revoke" the consent.
+![revoke](images/image23.png)
+
+32. Now, you can login with the app again and get an Access Token with patient_id included.
 
