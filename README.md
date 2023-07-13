@@ -39,3 +39,23 @@ For the prototype, the general architecture has to be adapted a little. Firstly,
 Notes on the components and the current state of development:
 - the FHIR server is provided by the company [pineIT](https://www.pineit.at) for this project. Due to CORS restrictions on the server side, relevant server endpoints are simulated on a local environment (localhost). The validation of the tokens is therefore not possible in the first step, and must be carried out as soon as the SMART on FHIR app is running under the same domain as the FHIR server in order to circumvent the CORS restrictions.
 - Currently, the access data to ID Austria is still missing, which is why GitHub is being used as the identity provider for the time being.
+
+# Environemnt Setup
+As mentioned, the setup is just a setup for a local environment (localhost). For further developments, the components must run publicly. The local development environment looks as follows:
+
+- OS: Ubuntu v22.04.2 LTS
+- Docker: v24.0.2
+- Node: v20.2.0
+
+To reproduce the setup, make sure these components are working.
+
+## FHIR Mock
+The FHIR server has two primary tasks. Firstly, it serves the smart-configuration file, which is accessible at /.well-known/smart-configuration. This file contains the endpoints of the authorization server. When the app contacts the FHIR server, it is directed to this file. By extracting the relevant information from the smart-configuration file, the app can establish communication with the authorization server. Secondly, the FHIR server is responsible for validating the JWT token issued by the authorization server. The app receives the JWT token from the authorization server and utilizes it to request FHIR resources through the FHIR server. However, the validation step cannot be performed in the local setup since the FHIR server is only simulated locally, limiting its capability to validate the token. Consequently, the validation process must be conducted and tested in a public environment at a later stage.
+
+To simulate the /.well-known/smart-configuration endpoint, perform the following steps:
+
+1. Navigate to your Home directory:
+```cd ~
+```
+
+2. Create a new directory:
