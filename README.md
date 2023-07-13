@@ -28,4 +28,4 @@ The access token is signed, contains information about the rights granted and ca
 7.	Refresh access token
 The validity of the access token is limited. To continue accessing FHIR resources, the application needs to update the token.
 
-In-Depth details can be found [here] (https://build.fhir.org/ig/HL7/smart-app-launch/app-launch.html#launch-app-standalone-launch). 
+In-Depth details can be found [here](https://build.fhir.org/ig/HL7/smart-app-launch/app-launch.html#launch-app-standalone-launch). 
