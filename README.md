@@ -6,7 +6,7 @@ This project is inspired by the Health Outcomes Observatory (H20) project, which
 
 ## Architecture (General)
 The general architecture of the launch and authorization process in SMART on FHIR is as follows:
-![Architecture - General](image.png)
+![Architecture - General](images/image.png)
 
 The authentication and authorisation process can be roughly described in seven steps:
 1.	Register App with EHR
