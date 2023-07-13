@@ -1,8 +1,8 @@
 # SMART-Keycloak-eID
-The main goal of this project is to create a prototype of a SMART on FHIR app that uses Keycloak and ID Austria for authorization and authentication. The app allows patients to securely access their own data in the Electronic Health Record (EHR) system. Keycloak serves as the authorization server, responsible for issuing JWT tokens to the app. It acts as an identity broker, with ID Austria being the identity provider responsible for authentication.
+The main goal of this project is to create a prototype of a [SMART on FHIR](https://docs.smarthealthit.org) app that uses [Keycloak](https://www.keycloak.org) and [ID Austria](https://www.oesterreich.gv.at/id-austria.html) for authorization and authentication. The app allows patients to securely access their own data in the Electronic Health Record (EHR) system. Keycloak serves as the authorization server, responsible for issuing JWT tokens to the app. It acts as an identity broker, with ID Austria being the identity provider responsible for authentication.
 
 ## Background
-This project is inspired by the Health Outcomes Observatory (H20) project, which aims to integrate patient-generated data (PRO) into EHR systems. By combining the SMART on FHIR app with Keycloak's authorization server and ID Austria as the identity provider, the project aims to provide patients with a secure and user-friendly way to access their health data.
+This project is inspired by the [Health Outcomes Observatory](https://health-outcomes-observatory.eu) (H20) project, which aims to integrate patient-generated data (PRO) into EHR systems. By combining the SMART on FHIR app with Keycloak's authorization server and ID Austria as the identity provider, the project aims to provide patients with a secure and user-friendly way to access health data.
 
 ## Architecture (General)
 The general architecture of the launch and authorization process in SMART on FHIR is as follows:
@@ -29,3 +29,7 @@ The access token is signed, contains information about the rights granted and ca
 The validity of the access token is limited. To continue accessing FHIR resources, the application needs to update the token.
 
 In-Depth details can be found [here](https://build.fhir.org/ig/HL7/smart-app-launch/app-launch.html#launch-app-standalone-launch). 
+
+## Architecture (Prototype)
+The specific architecture for the prototype looks as follows:
+![Architecture - Prototype](images/image1.png)
