@@ -152,5 +152,56 @@ node server.js
 http://localhost:8081/fhir/.well-known/smart-configuration
 ```
 
+## SMART Standalone App
+
+The next component is the SMART on FHIR App. The app is designed to work from a web browser. Users (or later, patients) can initiate the login process from there.
+
+SMART provides a [library](http://docs.smarthealthit.org/client-js/) for this purpose. The library offers three important components:
+
+1. oauth2.authorize() - This method accepts important parameters such as the Client ID (which must match the client created in Keycloak) and the FHIR server endpoint. The method retrieves information about the authorization server endpoints (smart-configuration) from the FHIR server. The required scopes are also specified here.
+2. ready() - Once the authorization and authentication process is complete, the app receives the corresponding JWT tokens in the HTML body. The ready() method uses this token to create a client object.
+3. The client object can then be used to query FHIR resources from the FHIR server. The FHIR server is responsible for validating the JWT token.
+
+The following instructions describe how to set up this app. Please note that the ready() method and the client object have not been tested yet, as the FHIR server is currently only a mock. Also, remember to adjust the parameters in the oauth2.authorize() method to match the correct FHIR server later.
+
+
+1. Clone this repository by running the following command in your terminal:
+```
+git clone https://github.com/larsgrespan/SMART-Keycloak-eID.git 
+```
+
+2. Change into the /SMART-App directory within the cloned repository:
+```
+cd SMART-Keycloak-eID/SMART-App
+```
+
+3. Install the http-server module with NPM:
+```
+npm install http-server
+```
+
+4. Start the application by running the http-server command:
+```
+http-server
+```
+
+5. Download the CORS Everywhere browser extension.
+
+6. Ensure the CORS Everywhere (or equivalent) extension is activated in your browser when you start the application.
+
+7. Open your browser and navigate to the following URL:
+```
+http://localhost:8080/launch.html
+```
+
+Note: Avoid opening index.html first, as this can lead to errors.
+
+8. To initiate the login process you can click the login button. However the authorization server is not configured yet, so it will lead to errors. When you finished the Keylocak setup, you can try the login process. Note that you may delete cookies after an login.
+
+
+
+
+
+
 
 
